@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlmaDeMalta.Common.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5bbdd66641c1947ce395b187c1b3c51f022f561")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlmaDeMalta.Common.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlmaDeMalta.Common.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

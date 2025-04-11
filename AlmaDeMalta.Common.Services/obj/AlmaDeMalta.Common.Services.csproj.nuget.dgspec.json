@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\Common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj": {}
+    "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\Common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj": {
+    "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\Common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj",
+        "projectUniqueName": "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj",
         "projectName": "AlmaDeMalta.Common.Services",
-        "projectPath": "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\Common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj",
+        "projectPath": "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\common\\AlmaDeMalta.Common.Services\\AlmaDeMalta.Common.Services.csproj",
         "packagesPath": "C:\\Users\\felix\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\Common\\AlmaDeMalta.Common.Services\\obj\\",
+        "outputPath": "C:\\Users\\felix\\repos\\AlmaDeMaltaBack\\common\\AlmaDeMalta.Common.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
