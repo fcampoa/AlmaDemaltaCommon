@@ -14,6 +14,17 @@ x86/
 [Aa]ppPackages/
 [Aa]rtifacts/
 
+# Build artifacts
+obj/
+bin/
+
+# NuGet artifacts
+*.nuget.cache
+*.dgspec.json
+*.assets.cache
+project.assets.json
+
+
 # .NET
 project.lock.json
 project.fragment.lock.json
