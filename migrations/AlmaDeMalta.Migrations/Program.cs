@@ -1,8 +1,6 @@
 ﻿
 
-using AlmaDeMalta.Common.Contracts.DataBase;
 using AlmaDeMalta.Common.DatabaseConnection;
-using AlmaDeMalta.Migrations;
 using AlmaDeMalta.Migrations.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
