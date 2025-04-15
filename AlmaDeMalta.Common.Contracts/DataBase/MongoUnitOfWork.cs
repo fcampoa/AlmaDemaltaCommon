@@ -8,45 +8,29 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AlmaDeMalta.Common.Contracts.DataBase;
-public class MongoUnitOfWork(IMongoClient mongoClient, string databaseName) : IUnitOfWork
+public class MongoUnitOfWork(IDbContext dbContext) : IUnitOfWork
 {
-    private readonly IMongoDatabase _database = mongoClient.GetDatabase(databaseName);
-    private readonly IClientSessionHandle _session = mongoClient.StartSession();
 
     private IRepository<Product>? _productRepository;
-    public IRepository<Product> ProductRepository => _productRepository ??= new RepositoryBase<Product>(_database);
+    public IRepository<Product> ProductRepository => _productRepository ??= new RepositoryBase<Product>(dbContext);
 
+    public void StartTransaction()
+    {
+
+    }
 
     public void Dispose()
     {
-        _session?.Dispose();
+        dbContext.Dispose();
     }
 
-    public bool SaveChanges()
+    public bool Commit()
     {
-        try
-        {
-            _session?.CommitTransaction();
-            return true;
-        }
-        catch (Exception ex)
-        {
-            _session?.AbortTransaction();
-            throw new Exception("Error saving changes", ex);
-        }
+       return dbContext.SaveChanges();
     }
 
-    public async Task<bool> SaveChangesAsync()
+    public async Task<bool> CommitAsync()
     {
-        try
-        {
-            await _session.CommitTransactionAsync();
-            return true;
-        }
-        catch (Exception ex)
-        {
-            _session.AbortTransactionAsync();
-            throw new Exception("Error saving changes", ex);
-        }
+        return await dbContext.SaveChangesAsync();
     }
 }

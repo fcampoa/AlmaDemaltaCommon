@@ -10,15 +10,8 @@ namespace AlmaDeMalta.Common.Contracts.DataBase;
     public interface IUnitOfWork
     {
     IRepository<Product> ProductRepository { get; }
-    /// <summary>
-    /// Save changes to the database.
-    /// </summary>
-    /// <returns>True if the changes were saved successfully, otherwise false.</returns>
-    bool SaveChanges();
-    /// <summary>
-    /// Asynchronously save changes to the database.
-    /// </summary>
-    /// <returns>A task that represents the asynchronous save operation. The task result contains true if the changes were saved successfully, otherwise false.</returns>
-    Task<bool> SaveChangesAsync();
+    void StartTransaction();
+    bool Commit();
+    Task<bool> CommitAsync();
     public void Dispose();
 }
