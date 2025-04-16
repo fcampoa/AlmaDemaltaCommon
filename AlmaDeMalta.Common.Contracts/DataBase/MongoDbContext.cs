@@ -107,9 +107,9 @@ namespace AlmaDeMalta.Common.Contracts.DataBase;
         var collectionNameAttribute = typeof(T).GetCustomAttribute<CollectionName>();
         if (collectionNameAttribute == null)
          {
-         throw new InvalidOperationException($"The type {typeof(T).Name} does not have a CollectionName attribute.");
-         }
-         _collections[type] = _database.GetCollection<T>(collectionNameAttribute.Name);
+         _database.CreateCollection(collectionNameAttribute?.Name);
+        }
+         _collections[type] = _database.GetCollection<T>(collectionNameAttribute?.Name);
         return (IMongoCollection<T>)_collections[type];
     }
     }
