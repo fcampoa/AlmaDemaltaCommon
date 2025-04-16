@@ -3,7 +3,7 @@
 namespace AlmaDeMalta.Common.Contracts.Repositories;
 public interface IRepository<T> where T : class
 {
-    Task<T> FindOneAsync(Expression<Func<T, bool>> filter);
+    Task<T?> FindOneAsync(Expression<Func<T, bool>> filter);
     Task<IList<T>> GetAsync();
     Task CreateAsync(T  entity);
     Task DeleteAsync(Expression<Func<T, bool>> filter);

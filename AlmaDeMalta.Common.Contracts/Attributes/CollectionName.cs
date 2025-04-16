@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AlmaDeMalta.Common.Contracts.Attributes;
+﻿namespace AlmaDeMalta.Common.Contracts.Attributes;
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class CollectionName: Attribute
     {

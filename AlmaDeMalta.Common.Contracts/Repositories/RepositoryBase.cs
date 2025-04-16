@@ -1,9 +1,8 @@
-﻿using AlmaDeMalta.Common.Contracts.Attributes;
-using AlmaDeMalta.Common.Contracts.Contracts;
-using AlmaDeMalta.Common.Contracts.DataBase;
+﻿using AlmaDeMalta.Common.Contracts.DataBase;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
 
 namespace AlmaDeMalta.Common.Contracts.Repositories;
@@ -21,22 +20,24 @@ public class RepositoryBase<T>(IDbContext dbContext) : IRepository<T> where T : 
 
     public async Task<bool> ExistsAsync(Expression<Func<T, bool>> filter)
     {
-       return await dbContext.GetCollection<T>().AnyAsync(filter);
+        var result = await dbContext.Filter<T>(filter);
+        return result.Any();
     }
 
-    public async Task<T> FindOneAsync(Expression<Func<T, bool>> filter)
+    public async Task<T?> FindOneAsync(Expression<Func<T, bool>> filter)
     {
-        return await dbContext.GetCollection<T>().FirstOrDefaultAsync(filter);
+        return await dbContext.FindOneAsync<T>(filter);
+
     }
 
     public async Task<IList<T>> GetAsync()
     {
-        return await dbContext.GetCollection<T>().ToListAsync();
+        return await dbContext.GetCollection<T>();
     }
 
     public async Task<IList<T>> GetAsync(Expression<Func<T, bool>> filter)
     {
-       return await dbContext.Filter<T>(filter).ToListAsync();
+        return await dbContext.Filter<T>(filter);
     }
 
     public async Task UpdateAsync(Expression<Func<T, bool>> filter, T entity)
