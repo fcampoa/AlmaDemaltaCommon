@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AlmaDeMalta.Migrations.Migrations.Seeds
 {
-    public class ProductSeed(IUnitOfWork unitOfWork) : IMigration
+    public class ProductSeed(IAlmaDeMaltaUnitOfWork unitOfWork) : IMigration
     {
         public async Task Execute()
         {
@@ -19,10 +19,13 @@ namespace AlmaDeMalta.Migrations.Migrations.Seeds
                 Description = "This is a test product",
                 Price = 9.99m,
                 CreatedAt = DateTime.UtcNow,
+                Stock = 10,
+                Availability = 10,
+                Barcode = "1234567890123",
             };
             var repo = unitOfWork.ProductRepository;
 
-            var existingProduct = await repo.ExistsAsync(p => p.Name == product.Name);
+            var existingProduct = await repo.ExistsAsync(p => p.Name == product.Name && p.Barcode == product.Barcode);
             if (!existingProduct)
             {
                 repo.Create(product);

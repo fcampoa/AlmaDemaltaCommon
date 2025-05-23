@@ -7,6 +7,8 @@ public class AlmaDeMaltaUnitOfWork(IDbContext dbContext) : UnitOfWork(dbContext)
 
     private IRepository<Product>? _productRepository;
     public IRepository<Product> ProductRepository => _productRepository ??= new RepositoryBase<Product>(dbContext);
+    private IRepository<InventoryMovements>? _inventoryMovementsRepository;
+    public IRepository<InventoryMovements> InventoryMovementsRepository => _inventoryMovementsRepository ??= new RepositoryBase<InventoryMovements>(dbContext);
 
 
 }

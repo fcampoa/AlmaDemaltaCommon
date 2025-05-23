@@ -11,5 +11,6 @@ namespace AlmaDeMalta.Common.Contracts.DataBase
     public interface IAlmaDeMaltaUnitOfWork: IUnitOfWork
     {
         IRepository<Product> ProductRepository { get; }
+        IRepository<InventoryMovements> InventoryMovementsRepository { get; }
     }
 }
