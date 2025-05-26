@@ -33,4 +33,14 @@ namespace AlmaDeMalta.Common.DatabaseConnection;
         });
         return services;
     }
+
+    public static IServiceCollection UseSandBox(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IDbContext>(s =>
+        {
+            var mongoClient = s.GetRequiredService<IMongoClient>();
+            return new SandBoxDbContext();
+        });
+        return services;
+    }
 }
