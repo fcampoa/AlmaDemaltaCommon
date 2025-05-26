@@ -38,9 +38,14 @@ namespace AlmaDeMalta.Common.DatabaseConnection;
     {
         services.AddSingleton<IDbContext>(s =>
         {
-            var mongoClient = s.GetRequiredService<IMongoClient>();
             return new SandBoxDbContext();
         });
+        services.AddScoped<IAlmaDeMaltaUnitOfWork>(s =>
+        {
+            var dbContext = s.GetRequiredService<IDbContext>();
+            return new AlmaDeMaltaUnitOfWork(dbContext);
+        });
+
         return services;
     }
 }
