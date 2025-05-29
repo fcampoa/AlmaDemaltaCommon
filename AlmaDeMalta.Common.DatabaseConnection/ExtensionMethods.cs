@@ -14,6 +14,9 @@ namespace AlmaDeMalta.Common.DatabaseConnection;
     {
         var connectionString = configuration["MongoDb:ConnectionString"];
         var databaseName = configuration["MongoDb:DatabaseName"];
+        
+        Console.WriteLine($"MongoDB Connection String: {connectionString}");
+        Console.WriteLine($"MongoDB Database Name: {databaseName}");
 
         BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String)); // Representar GUIDs como cadenas
 
