@@ -9,6 +9,8 @@ namespace AlmaDeMalta.Common.Contracts.Contracts;
         Gram = 3,
         Kilogram = 4,
         Piece = 5,
-        Other = 6
+        Ounce = 6, // Ounce
+        pound = 7, // Pound
+        Other = 8
     }
 
