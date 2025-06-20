@@ -12,5 +12,6 @@ namespace AlmaDeMalta.Common.Contracts.DataBase
     {
         IRepository<Product> ProductRepository { get; }
         IRepository<InventoryMovements> InventoryMovementsRepository { get; }
+        IRepository<Sale> SaleRepository { get; }
     }
 }

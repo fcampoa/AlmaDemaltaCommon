@@ -14,7 +14,6 @@ public class Product : BaseEntity
     public string Brand { get; set; } = string.Empty;
     public ProductType Type { get; set; } = ProductType.Other;
     public MesaureUnit Unit { get; set; } = MesaureUnit.Other;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public decimal Stock { get; set; } = 0.0m;
     public decimal Availability { get; set; } = 0.0m;
     public string Barcode { get; set; } = string.Empty;
