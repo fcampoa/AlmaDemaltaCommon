@@ -26,10 +26,15 @@ namespace AlmaDeMalta.Common.DatabaseConnection;
             var mongoClient = s.GetRequiredService<IMongoClient>();
             return new MongoDbContext(mongoClient, databaseName);
         });
-        services.AddScoped<IAlmaDeMaltaUnitOfWork>(s =>
+        //services.AddScoped<IAlmaDeMaltaUnitOfWork>(s =>
+        //{
+        //    var dbContext = s.GetRequiredService<IDbContext>();
+        //    return new AlmaDeMaltaUnitOfWork(dbContext);
+        //});
+        services.AddScoped<IUnitOfWork>(s =>
         {
             var dbContext = s.GetRequiredService<IDbContext>();
-            return new AlmaDeMaltaUnitOfWork(dbContext);
+            return new UnitOfWork(dbContext);
         });
         return services;
     }
