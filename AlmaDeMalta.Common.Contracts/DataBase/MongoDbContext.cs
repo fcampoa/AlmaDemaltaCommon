@@ -5,111 +5,120 @@ using System.Reflection;
 using System.Linq;
 
 namespace AlmaDeMalta.Common.Contracts.DataBase;
-    public class MongoDbContext(IMongoClient mongoClient, string databaseName) : IDbContext
-    {
-        private readonly IMongoDatabase _database = mongoClient.GetDatabase(databaseName);
-        private readonly IClientSessionHandle _session = mongoClient.StartSession();
-        private readonly Dictionary<Type, object> _collections = new();
+public class MongoDbContext(IMongoClient mongoClient, string databaseName) : IDbContext
+{
+    private readonly IMongoDatabase _database = mongoClient.GetDatabase(databaseName);
+    private readonly IClientSessionHandle _session = mongoClient.StartSession();
+    private readonly Dictionary<Type, object> _collections = new();
 
     public async Task<IList<T>> GetCollection<T>() where T : class
-        {
-            return await GetMongoCollection<T>().Find(FilterDefinition<T>.Empty).ToListAsync();
-        }
+    {
+        return await GetMongoCollection<T>().Find(FilterDefinition<T>.Empty).ToListAsync();
+    }
 
-        public async Task AddAsync<T>(T entity) where T : class
-        {
-            var collection = GetMongoCollection<T>();
-            await collection.InsertOneAsync(_session, entity);
-        }
+    public async Task AddAsync<T>(T entity) where T : class
+    {
+        var collection = GetMongoCollection<T>();
+        await collection.InsertOneAsync(_session, entity);
+    }
 
-        public async Task UpdateAsync<T>(Expression<Func<T, bool>> filter, T entity) where T : class
-        {
-            var collection = GetMongoCollection<T>();
-            await collection.ReplaceOneAsync<T>(_session, filter, entity);
-        }
+    public async Task UpdateAsync<T>(Expression<Func<T, bool>> filter, T entity) where T : class
+    {
+        var collection = GetMongoCollection<T>();
+        await collection.ReplaceOneAsync<T>(_session, filter, entity);
+    }
 
-        public async Task DeleteAsync<T>(Expression<Func<T, bool>> filter) where T : class
-        {
-            var collection = GetMongoCollection<T>();
-            await collection.DeleteOneAsync(_session, filter);
-        }
+    public async Task DeleteAsync<T>(Expression<Func<T, bool>> filter) where T : class
+    {
+        var collection = GetMongoCollection<T>();
+        await collection.DeleteOneAsync(_session, filter);
+    }
 
-        public async Task<IList<T>> Filter<T>(Expression<Func<T, bool>> filter) where T : class
-        {
-            return await GetMongoCollection<T>().Find(filter).ToListAsync();
-        }
+    public async Task<IList<T>> Filter<T>(Expression<Func<T, bool>> filter) where T : class
+    {
+        return await GetMongoCollection<T>().Find(filter).ToListAsync();
+    }
     public async Task<T> FindOneAsync<T>(Expression<Func<T, bool>> filter) where T : class
     {
         return await GetMongoCollection<T>().Find(filter).FirstOrDefaultAsync();
     }
 
     public void Add<T>(T entity) where T : class
-        {
+    {
         var collection = GetMongoCollection<T>();
         collection.InsertOne(entity);
-        }
+    }
 
-        public void Update<T>(Expression<Func<T, bool>> filter, T entity) where T : class
-        {
+    public void Update<T>(Expression<Func<T, bool>> filter, T entity) where T : class
+    {
         var collection = GetMongoCollection<T>();
         collection.ReplaceOne<T>(filter, entity);
-        }
+    }
 
-        public void Delete<T>(Expression<Func<T, bool>> filter) where T : class
-        {
+    public void Delete<T>(Expression<Func<T, bool>> filter) where T : class
+    {
         var collection = GetMongoCollection<T>();
         collection.DeleteOne(filter);
-        }
+    }
+    public Task UpdateManyAsync<T>(Expression<Func<T, bool>> filter, Expression<Func<T, T>> update) where T : class
+    {
+        var collection = GetMongoCollection<T>();
+        var visitor = new UpdateExpressionVisitor<T>();
+        var updates = visitor.Visit(update);
 
-        public void InitTransaction()
+        var updateDefinition = Builders<T>.Update.Combine(updates);
+        return collection.UpdateManyAsync(_session, filter, updateDefinition);
+    }
+
+    public void InitTransaction()
+    {
+        try
         {
-            try
-            {
             _session.StartTransaction();
-            }
-            catch
-            {
+        }
+        catch
+        {
             _session.AbortTransaction();
             throw;
-            }
         }
+    }
 
-        public bool SaveChanges()
-        {
+    public bool SaveChanges()
+    {
         throw new NotImplementedException();
-        }
+    }
 
-        public async Task<bool> SaveChangesAsync()
+    public async Task<bool> SaveChangesAsync()
+    {
+        try
         {
-            try
-            {
             await _session.CommitTransactionAsync();
             return true;
-            }
-            catch
-            {
+        }
+        catch
+        {
             await _session.AbortTransactionAsync(); // Cancela la transacción en caso de error
             return false;
-            }
         }
+    }
 
-        public void Dispose()
-        {
+    public void Dispose()
+    {
         _session?.Dispose();
-        }
-        private IMongoCollection<T> GetMongoCollection<T>() where T : class
-        {
-            var  type = typeof(T);
+    }
+    private IMongoCollection<T> GetMongoCollection<T>() where T : class
+    {
+        var type = typeof(T);
         if (_collections.TryGetValue(type, out var collection))
         {
             return (IMongoCollection<T>)collection;
         }
         var collectionNameAttribute = typeof(T).GetCustomAttribute<CollectionName>();
         if (collectionNameAttribute == null)
-         {
-         _database.CreateCollection(collectionNameAttribute?.Name);
+        {
+            _database.CreateCollection(collectionNameAttribute?.Name);
         }
-         _collections[type] = _database.GetCollection<T>(collectionNameAttribute?.Name);
+        _collections[type] = _database.GetCollection<T>(collectionNameAttribute?.Name);
         return (IMongoCollection<T>)_collections[type];
     }
-    }
+}

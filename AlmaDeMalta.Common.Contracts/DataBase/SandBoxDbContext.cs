@@ -68,4 +68,9 @@ public class SandBoxDbContext : IDbContext
     {
         throw new NotImplementedException();
     }
+
+    public Task UpdateManyAsync<T>(Expression<Func<T, bool>> filter, Expression<Func<T, T>> update) where T : class
+    {
+        throw new NotImplementedException();
+    }
 }

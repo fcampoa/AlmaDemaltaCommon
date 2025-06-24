@@ -6,10 +6,12 @@ namespace AlmaDeMalta.Common.Contracts.Contracts;
     public class Sale: BaseEntity
     {
     public override IList<string> ItemType => [nameof(Sale)];
-    public List<ProductOvewview> Products { get; set; } = [];
+    public List<SaleDetail> Products { get; set; } = [];
     public decimal Subtotal { get; set; } = 0;
     public decimal Total { get; set; } = 0;
     public PaymentMethod PaymentMethod { get; set; } = null!;
     public StatusEnum Status { get; set; } = StatusEnum.Draft;
+    public Guid? PurchaseOrderNumberPrefixId { get; set; } = null!;
+    public string PurchaseOrderNumber { get; set; } = string.Empty; 
 
 }

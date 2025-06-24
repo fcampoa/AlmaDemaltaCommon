@@ -1,9 +1,6 @@
 ﻿using AlmaDeMalta.Common.Contracts.DataBase;
 using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 using System.Linq.Expressions;
-using System.Linq;
-using System.Reflection;
 
 namespace AlmaDeMalta.Common.Contracts.Repositories;
 public class RepositoryBase<T>(IDbContext dbContext) : IRepository<T> where T : class
@@ -56,5 +53,10 @@ public class RepositoryBase<T>(IDbContext dbContext) : IRepository<T> where T : 
     public void Delete(Expression<Func<T, bool>> filter)
     {
         dbContext.Delete<T>(filter);
+    }
+
+    public async Task UpdateManyAsync(Expression<Func<T, bool>> filter, Expression<Func<T, T>> update)
+    {
+        await dbContext.UpdateManyAsync<T>(filter, update);
     }
 }

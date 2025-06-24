@@ -4,5 +4,6 @@
     Cash = 0,
     Card = 1,
     Transfer = 2,
-    Other = 3
+    Complimentary = 3,
+    Other = 4
 }

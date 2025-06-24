@@ -12,6 +12,7 @@ namespace AlmaDeMalta.Common.Contracts.DataBase
         Task<IList<T>> GetCollection<T>() where T : class;
         Task AddAsync<T>(T entity) where T : class;
         Task UpdateAsync<T>(Expression<Func<T, bool>> filter, T entity) where T : class;
+        Task UpdateManyAsync<T>(Expression<Func<T, bool>> filter, Expression<Func<T, T>> update) where T : class;
         Task DeleteAsync<T>(Expression<Func<T, bool>> filter) where T : class;
         void Add<T>(T entity) where T : class;
         void Update<T>(Expression<Func<T, bool>> filter, T entity) where T : class;

@@ -8,6 +8,7 @@ public interface IRepository<T> where T : class
     Task CreateAsync(T  entity);
     Task DeleteAsync(Expression<Func<T, bool>> filter);
     Task UpdateAsync(Expression<Func<T, bool>> filter, T entity);
+    Task UpdateManyAsync(Expression<Func<T, bool>> filter, Expression<Func<T, T>> update);
     Task<bool> ExistsAsync(Expression<Func<T, bool>> filter);
     Task<IList<T>> GetAsync(Expression<Func<T, bool>> filter);
     void Create(T entity);
