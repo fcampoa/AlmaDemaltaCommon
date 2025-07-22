@@ -29,10 +29,10 @@ jobs:
         run: dotnet build AlmaDeMalta.Common.sln --configuration Release --no-restore
 
       - name: Pack AlmaDeMalta.Common.Contracts
-        run: dotnet pack src/AlmaDeMalta.Common.Contracts/AlmaDeMalta.Common.Contracts.csproj --configuration Release --output ./nupkgs
+        run: dotnet pack AlmaDeMalta.Common.Contracts/AlmaDeMalta.Common.Contracts.csproj --configuration Release --output ./nupkgs
 
       - name: Pack AlmaDeMalta.Common.DatabaseConnection
-        run: dotnet pack src/AlmaDeMalta.Common.DatabaseConnection/AlmaDeMalta.Common.DatabaseConnection.csproj --configuration Release --output ./nupkgs
+        run: dotnet pack AlmaDeMalta.Common.DatabaseConnection/AlmaDeMalta.Common.DatabaseConnection.csproj --configuration Release --output ./nupkgs
 
       - name: Publish NuGet packages to GitHub
         run: |
