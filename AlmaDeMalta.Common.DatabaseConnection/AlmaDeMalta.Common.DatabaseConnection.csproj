@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>AntaersSoft.Database</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>fcampoa</Authors>
+		<Company>antaresSoft</Company>
+		<Description>Database library</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/fcampoa/AlmaDemaltaCommon</RepositoryUrl>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

@@ -1,0 +1,41 @@
+name: Publish NuGet Packages
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [created]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Add GitHub NuGet source
+        run: dotnet nuget add source --username ${{ github.actor }} --password ${{ secrets.GH_PACKAGES_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+
+      - name: Restore dependencies
+        run: dotnet restore AlmaDeMalta.Common.sln
+
+      - name: Build solution
+        run: dotnet build AlmaDeMalta.Common.sln --configuration Release --no-restore
+
+      - name: Pack AlmaDeMalta.Common.Contracts
+        run: dotnet pack src/AlmaDeMalta.Common.Contracts/AlmaDeMalta.Common.Contracts.csproj --configuration Release --output ./nupkgs
+
+      - name: Pack AlmaDeMalta.Common.DatabaseConnection
+        run: dotnet pack src/AlmaDeMalta.Common.DatabaseConnection/AlmaDeMalta.Common.DatabaseConnection.csproj --configuration Release --output ./nupkgs
+
+      - name: Publish NuGet packages to GitHub
+        run: |
+          for f in ./nupkgs/*.nupkg; do
+            dotnet nuget push "$f" --source "github" --api-key "${{ secrets.GH_PACKAGES_TOKEN }}" --skip-duplicate
+          done
