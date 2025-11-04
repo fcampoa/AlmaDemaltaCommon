@@ -14,7 +14,6 @@ public class InventoryMovements: BaseEntity
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public string? UserId { get; set; } = null!;
     public bool IsIncoming { get; set; } = false;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public MesaureUnit Unit { get; set; } = MesaureUnit.Gram;
 
 }
